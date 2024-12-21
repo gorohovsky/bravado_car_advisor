@@ -1,0 +1,21 @@
+name: bravado_car_advisor
+services:
+  postgres:
+    image: postgres:17.2
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: root
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+
+volumes:
+  postgres_data:
