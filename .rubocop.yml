@@ -1,0 +1,51 @@
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'config.ru'
+    - 'config/**/*'
+    - 'db/schema.rb'
+    - 'Rakefile'
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+  Exclude:
+    - 'spec/rails_helper.rb'
+    - 'Gemfile'
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Exclude:
+    - 'Gemfile'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 125
+
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+Style/ArgumentsForwarding:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/FirstArgumentIndentation:
+  Exclude:
+    - 'spec/**/*'
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': '()'
