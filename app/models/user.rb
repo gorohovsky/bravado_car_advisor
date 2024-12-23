@@ -2,6 +2,10 @@ class User < ApplicationRecord
   has_many :user_preferred_brands, dependent: :destroy
   has_many :preferred_brands, through: :user_preferred_brands, source: :brand
 
+  validates :email, presence: true
+  validates :email, uniqueness: true
+  validates :preferred_price_range, presence: true
+
   CACHE_KEY_TEMPLATE = 'user_ai_car_suggestions/%s'.freeze
   CACHE_TTL = 24.hours
 
