@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :brand do
-    name { Faker::Vehicle.manufacturer }
+    name { Faker::Vehicle.unique.manufacturer }
   end
 end
