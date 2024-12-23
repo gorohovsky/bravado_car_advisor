@@ -3,7 +3,7 @@
 We want to build a car market platform and provide a personalized selection of cars to our users. There are few main models:
 
 * `Brand(name)` - car brands like Mercedes-Benz, Toyota, Volkswagen, BMW.
-* `Car(model_name, brand_id, price)` -  cars for sale.
+* `Car(model, brand_id, price)` -  cars for sale.
 * `User(email, preferred_price_range)` - our users who want to buy a car.
 * `UserPreferredBrand(user_id, brand_id)` - relationship to connect the user and his preferred car brands.
 
