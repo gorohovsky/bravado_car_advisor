@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://bravado-images-production.s3.amazonaws.com/recomended_cars.json?user_id=5
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Connection:
+      - close
+      Host:
+      - bravado-images-production.s3.amazonaws.com
+      User-Agent:
+      - http.rb/5.2.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - kd6g5OrsZkYsHgyWeC6W7pmuIe6lwYSyhxMFQ8heqeUaMk/7ZCRhNvVaL2peXXXdNU4xNpzMZNM=
+      X-Amz-Request-Id:
+      - 9BWW8TKF5SJJZ9AK
+      Date:
+      - Sat, 21 Dec 2024 22:44:16 GMT
+      X-Amz-Replication-Status:
+      - COMPLETED
+      Last-Modified:
+      - Mon, 23 May 2022 09:34:13 GMT
+      Etag:
+      - '"f926b8340e2fea117fcb4aaaa62ddac4"'
+      X-Amz-Version-Id:
+      - I3yhiQO9hRek.b1qrDFA5nuKZG96QMq_
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '382'
+      Server:
+      - AmazonS3
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        [
+          { "car_id": 179, "rank_score": 0.945 },
+          { "car_id": 5, "rank_score": 0.4552 },
+          { "car_id": 13, "rank_score": 0.567 },
+          { "car_id": 97, "rank_score": 0.9489 },
+          { "car_id": 32, "rank_score": 0.0967 },
+          { "car_id": 176, "rank_score": 0.0353 },
+          { "car_id": 177, "rank_score": 0.1657 },
+          { "car_id": 36, "rank_score": 0.7068 },
+          { "car_id": 103, "rank_score": 0.4729 }
+        ]
+  recorded_at: Sat, 21 Dec 2024 22:44:15 GMT
+recorded_with: VCR 6.3.1
