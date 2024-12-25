@@ -1,6 +1,7 @@
 class CarRecommendationsController < ApplicationController
   include Pagy::Backend
-  before_action :set_user
+
+  before_action :validate_params, :set_user
 
   def index
     @pagy, @cars = pagy CarRecommendationService.new(@user).call

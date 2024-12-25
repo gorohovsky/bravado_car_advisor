@@ -16,6 +16,8 @@ gem "jbuilder", "~> 2.13"
 
 gem "pagy", "~> 9.3"
 
+gem "dry-validation", "~> 1.8"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
