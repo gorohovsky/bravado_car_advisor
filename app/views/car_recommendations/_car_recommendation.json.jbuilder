@@ -1,7 +1,7 @@
 json.id car.id
 json.brand do
-  json.id car.brand.id
-  json.name car.brand.name
+  json.id car.brand_id
+  json.name car.brand_name
 end
 json.price car.price
 # json.rank_score car.rank_score

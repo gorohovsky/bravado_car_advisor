@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   def ai_car_suggestions
     Rails.cache.fetch(cache_key, expires_in: CACHE_TTL) do
-      SuggestionsApi::Client.new(id).perform
+      SuggestionsApi::Client.new(id).perform.sort_by! { -_1['rank_score'] }
     end
   end
 
