@@ -6,4 +6,4 @@ end
 json.price car.price
 # json.rank_score car.rank_score
 json.model car.model
-# json.label car.label
+json.label label_to_human car.label

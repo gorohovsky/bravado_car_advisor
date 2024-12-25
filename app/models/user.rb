@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  # TODO: replace associations if no operations on the join table
+  # has_and_belongs_to_many :brands, join_table: :user_preferred_brands
   has_many :user_preferred_brands, dependent: :destroy
   has_many :preferred_brands, through: :user_preferred_brands, source: :brand
 
