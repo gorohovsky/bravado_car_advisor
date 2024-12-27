@@ -1,15 +1,19 @@
 class CarRecommendationsController < ApplicationController
   include Pagy::Backend
 
-  before_action :validate_params, :set_user
+  before_action :validate_params, :ensure_user_exists!
 
   def index
-    @pagy, @cars = pagy CarRecommendationService.new(@user).call
+    @pagy, @cars = pagy CarRecommendationService.new(**query_params).call
   end
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def ensure_user_exists!
+    User.find @valid_params[:user_id]
+  end
+
+  def query_params
+    @valid_params.except :page
   end
 end

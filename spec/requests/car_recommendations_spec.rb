@@ -89,5 +89,68 @@ describe 'CarRecommendations', type: :request do
         it_behaves_like 'correct response', 1
       end
     end
+
+    describe 'request parameters' do
+      let!(:bmw_car) { create(:car, :with_brand, brand_name: 'BMW', price: 4000) }
+      let!(:audi_car) { create(:car, :with_brand, brand_name: 'Audi', price: 5000) }
+
+      shared_examples 'correct response' do
+        it 'responds with 200 and cars matching the criteria' do
+          expect(subject.status).to eq 200
+          JSON.parse(subject.body).tap do |payload|
+            expect(payload.size).to eq 1
+            expect(payload.first).to eq(
+              'id' => expected_car.id,
+              'brand' => {
+                'id' => expected_car.brand.id,
+                'name' => expected_car.brand.name
+              },
+              'price' => expected_car.price,
+              'model' => expected_car.model,
+              'label' => 'null'
+            )
+          end
+        end
+      end
+
+      describe 'query' do
+        context 'when supplied full brand name' do
+          let(:params) { super().merge!(query: 'BMW') }
+          let!(:expected_car) { bmw_car }
+
+          it_behaves_like 'correct response'
+        end
+
+        context 'when supplied partial brand name' do
+          let(:params) { super().merge!(query: 'Au') }
+          let!(:expected_car) { audi_car }
+
+          it_behaves_like 'correct response'
+        end
+
+        context 'when a brand does not exist' do
+          let(:params) { super().merge!(query: 'Lincoln') }
+
+          it 'responds with 200 and an empty array' do
+            expect(subject.status).to eq 200
+            expect(subject.body).to eq '[]'
+          end
+        end
+      end
+
+      describe 'price_min' do
+        let(:params) { super().merge!(price_min: 5000) }
+        let(:expected_car) { audi_car }
+
+        it_behaves_like 'correct response'
+      end
+
+      describe 'price_max' do
+        let(:params) { super().merge!(price_max: 4000) }
+        let(:expected_car) { bmw_car }
+
+        it_behaves_like 'correct response'
+      end
+    end
   end
 end
