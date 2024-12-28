@@ -1,25 +1,12 @@
 class CarRecommendationService
-  CAR_MATCH_LABEL = 'COALESCE((SELECT users.preferred_price_range @> cars.price::int8)::int, -1) AS label'.freeze
-  FIELDS_TO_SELECT = %(
-    cars.id,
-    cars.price,
-    COALESCE(json.rank_score, -1) AS rank,
-    cars.model,
-    brands.id AS brand_id,
-    brands.name AS brand_name,
-    #{CAR_MATCH_LABEL}
-  ).freeze
-  BRAND_FILTER = 'brands.name ILIKE ?'.freeze
-  ORDER = 'label DESC, rank DESC, cars.price ASC'.freeze
-
-  MIN_PRICE = 1
-  MAX_PRICE = Float::INFINITY
+  include Constants
 
   def initialize(user, query: nil, price_min: MIN_PRICE, price_max: MAX_PRICE)
     @user = user
     @brand_name = query
     @price_min = price_min
     @price_max = price_max
+    @car_ranks = AiSuggestionsService.new(@user).call
   end
 
   def call
@@ -42,20 +29,11 @@ class CarRecommendationService
   end
 
   def join_car_ranks(query)
-    query.joins <<-SQL
-      LEFT JOIN (
-        SELECT
-          (car.value->>'car_id')::bigint AS car_id,
-          (car.value->>'rank_score')::float AS rank_score
-        FROM
-        json_array_elements('#{car_ranks}'::json) AS car(value)
-      ) json
-      ON cars.id = json.car_id
-    SQL
+    query.joins format(JSON_JOIN, car_ranks_json)
   end
 
-  def car_ranks
-    JSON.generate AiSuggestionsService.new(@user).call
+  def car_ranks_json
+    JSON.generate @car_ranks
   end
 
   def apply_brand_filter(query)
