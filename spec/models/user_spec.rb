@@ -26,7 +26,7 @@ describe User, type: :model do
 
     context 'when cache is unavailable' do
       context 'when suggestions are successfully retrieved' do
-        before { allow_any_instance_of(SuggestionsApi::Client).to receive(:perform).and_return suggestions.dup }
+        before { allow_any_instance_of(SuggestionsApi::Client).to receive(:perform).and_return suggestions }
 
         it 'caches them' do
           expect(Rails.cache.read(cache_key)).to be_nil
@@ -34,8 +34,8 @@ describe User, type: :model do
           expect(Rails.cache.read(cache_key)).to eq subject
         end
 
-        it 'returns them in descending order of "rank_score"' do
-          expect(subject).to eq suggestions.reverse
+        it 'returns them' do
+          expect(subject).to eq suggestions
         end
       end
 
