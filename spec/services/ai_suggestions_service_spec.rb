@@ -22,9 +22,13 @@ describe AiSuggestionsService do
     end
 
     context 'when the suggestions cannot be retrieved' do
-      before { allow_any_instance_of(SuggestionsApi::Client).to receive(:perform).and_raise Errors::Api::BadResponse }
+      let(:error) { Errors::Api::BadResponse.new(error_message) }
+      let(:error_message) { 'Internal Server Error' }
+
+      before { allow_any_instance_of(SuggestionsApi::Client).to receive(:perform).and_raise(error) }
 
       it 'enqueues a background job to retrieve them asynchronously and returns empty set' do
+        expect(Rails.logger).to receive(:error).with(/#{error_message}/)
         expect(AiSuggestionsJob).to receive(:perform_later).with user.id
         expect(subject).to eq []
       end

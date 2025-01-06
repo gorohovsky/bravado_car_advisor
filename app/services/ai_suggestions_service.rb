@@ -5,7 +5,8 @@ class AiSuggestionsService
 
   def call
     @user.ai_car_suggestions
-  rescue HTTP::TimeoutError, Errors::Api::BadResponse
+  rescue StandardError => e
+    Rails.logger.error e.full_message
     AiSuggestionsJob.perform_later @user.id
     []
   end
