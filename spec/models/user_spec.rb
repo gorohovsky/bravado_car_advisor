@@ -40,11 +40,13 @@ describe User, type: :model do
       end
 
       context 'when the API client raises an error' do
-        before { allow(SuggestionsApi::Client).to receive_message_chain(:new, :perform).and_raise Errors::Api::BadResponse }
+        before do
+          allow(SuggestionsApi::Client).to receive_message_chain(:new, :perform).and_raise Errors::ExternalApi::BadResponse
+        end
 
         it 'caches nothing' do
           expect(Rails.cache.read(cache_key)).to be_nil
-          expect { subject }.to raise_error(Errors::Api::BadResponse).and \
+          expect { subject }.to raise_error(Errors::ExternalApi::BadResponse).and \
                                 not_change { Rails.cache.read(cache_key) }
         end
       end

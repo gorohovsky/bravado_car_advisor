@@ -1,6 +1,6 @@
 module SuggestionsApi
   class Client
-    include Errors::Api
+    include Errors::ExternalApi
 
     URL_TEMPLATE = "#{ENV.fetch('AI_SUGGESTIONS_API_URL')}?user_id=%s".freeze
     HEADERS = { 'Accept' => 'application/json' }.freeze
@@ -22,7 +22,11 @@ module SuggestionsApi
     end
 
     def handle_response
-      @response.status.success? ? @response.parse : raise(BadResponse)
+      @response.status.success? ? validate_response(@response.parse) : raise(BadResponse)
+    end
+
+    def validate_response(response)
+      ResponseValidator.new(response).validate!
     end
 
     def url

@@ -22,7 +22,7 @@ describe AiSuggestionsService do
     end
 
     context 'when the suggestions cannot be retrieved' do
-      let(:error) { Errors::Api::BadResponse.new(error_message) }
+      let(:error) { Errors::ExternalApi::BadResponse.new(error_message) }
       let(:error_message) { 'Internal Server Error' }
 
       before { allow_any_instance_of(SuggestionsApi::Client).to receive(:perform).and_raise(error) }

@@ -34,7 +34,7 @@ describe SuggestionsApi::Client do
 
     context 'when bad response' do
       before { stub_request(:get, /#{host}/).to_return(status: [500, 'Internal Server Error']) }
-      it_behaves_like 'error', Errors::Api::BadResponse
+      it_behaves_like 'error', Errors::ExternalApi::BadResponse
     end
   end
 end
